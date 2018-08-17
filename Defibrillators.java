@@ -1,5 +1,7 @@
 package codingame;
 
+import java.util.Scanner;
+
 /**
  * <h1>Defibrillators</h1>
  *
@@ -22,15 +24,15 @@ package codingame;
  * <li>Latitude (degrees)
  * </ol>
  * These fields are separated by a semicolon (;).<br>
- * <i>Beware:</i> the decimal numbers use the comma (,) as decimal separator. Remember to turn the comma (,) into dot
+ * <b>Beware:</b> the decimal numbers use the comma (,) as decimal separator. Remember to turn the comma (,) into dot
  * (.) if necessary in order to use the data in your program.
  * 
  * <h3>DISTANCE</h3>
  * The distance <b>d</b> between two points A and B will be calculated using the following formula:<br>
  * <ul>
- * <li>x = (B<sub>long</sub>&minus;A<sub>long</sub>)&times;cos((A<sub>lat</sub>&plus;B<sub>lat</sub>)&divide;2)
- * <li>y =
- * <li>d = &radic;(x&sup2;&plus;y&sup2;)&times;6371
+ * <li>x = (B<sub>long</sub> &minus; A<sub>long</sub>) &times; cos((A<sub>lat</sub> &plus; B<sub>lat</sub>) &divide; 2)
+ * <li>y = B<sub>lat</sub> &minus; A<sub>lat</sub>
+ * <li>d = &radic;(x&sup2; &plus; y&sup2;) &times; 6371
  * </ul>
  * <i>Note:</i> In this formula, the latitudes and longitudes are expressed in radians. 6371 corresponds to the radius
  * of the earth in km.<br>
@@ -38,9 +40,9 @@ package codingame;
  * given as input to the program.
  * 
  * <h2>Input:</h2>
- * Line 1: User's longitude (in degrees)
- * Line 2: User's latitude (in degrees)
- * Line 3: The number <b>N</b> of defibrillators located in the streets of Montpellier
+ * Line 1: User's longitude (in degrees)<br>
+ * Line 2: User's latitude (in degrees)<br>
+ * Line 3: The number <b>N</b> of defibrillators located in the streets of Montpellier<br>
  * <b>N</b> next lines: a description of each defibrillator
  * 
  * <h2>Output:</h2>
@@ -54,20 +56,17 @@ package codingame;
  * @author Stephen Broughton
  * @since Aug 14, 2018
  */
-import java.util.Scanner;
 
 class Defibrillators {
     static Scanner in = new Scanner(System.in);
+    static double bestDist = Double.MAX_VALUE;
+    static String bestName = "None";
 
     public static void main(String args[]) {
-        double bestDist = Double.MAX_VALUE;
-        String bestName = "None";
         Double LON = new Double(in.next().replace(',', '.'));
         Double LAT = new Double(in.next().replace(',', '.'));
         int N = in.nextInt();
-        if (in.hasNextLine()) {
-            in.nextLine();
-        }
+        if (in.hasNextLine()) in.nextLine();
         for (int i = 0; i < N; i++) {
             String DEFIB = in.nextLine().replace(',', '.');
             int i1 = DEFIB.lastIndexOf(";");
@@ -77,6 +76,7 @@ class Defibrillators {
             double x = (LON.doubleValue() - lon.doubleValue()) * Math.cos( (LAT.doubleValue() + lat.doubleValue()) / 2);
             double y = LAT.doubleValue() - lat.doubleValue();
             double dist = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+
             if (dist < bestDist) {
                 bestDist = dist;
                 i1 = DEFIB.indexOf(";") + 1;
@@ -84,7 +84,6 @@ class Defibrillators {
                 bestName = DEFIB.substring(i1, i2);
             }
         }
-
         System.out.println(bestName);
     }
 }

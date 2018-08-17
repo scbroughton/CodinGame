@@ -1,5 +1,8 @@
 package codingame;
 
+import java.util.Hashtable;
+import java.util.Scanner;
+
 /**
  * <h1>MIME Type</h1>
  *
@@ -30,9 +33,9 @@ package codingame;
  * then display <i>UNKNOWN</i>.
  * 
  * <h2>Constraints:</h2>
- * 0 &lt; <b>N</b> &lt; 10000
+ * 0 &lt; <b>N</b> &lt; 10000<br>
  * 0 &lt; <b>Q</b> &lt; 10000
- * 
+ * <p>
  * <ul>
  * <li>File extensions are composed of a maximum of 10 alphanumerical ASCII characters.
  * <li>MIME types are composed of a maximum 50 alphanumerical and punctuation ASCII characters.
@@ -45,8 +48,6 @@ package codingame;
  * @author Stephen Broughton
  * @since Aug 14, 2018
  */
-import java.util.Hashtable;
-import java.util.Scanner;
 
 class MIME_Type {
     static Scanner in = new Scanner(System.in);

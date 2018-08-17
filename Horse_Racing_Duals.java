@@ -1,5 +1,8 @@
 package codingame;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 /**
  * <h1>Horse Racing Duals</h1>
  *
@@ -25,9 +28,6 @@ package codingame;
  * @author Stephen Broughton
  * @since Aug 14, 2018
  */
-
-import java.util.Arrays;
-import java.util.Scanner;
 
 class Horse_Racing_Duals {
     static Scanner in = new Scanner(System.in);
