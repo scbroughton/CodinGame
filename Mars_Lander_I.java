@@ -106,80 +106,81 @@ import java.util.Vector;
  * @since Aug 14, 2018
  */
 
-class Tuple {
-    public int X;
-    public int Y;
-
-    Tuple(int x, int y) {
-        this.X = x;
-        this.Y = y;
-    }
-}
-
-class Line {
-    private Tuple left, right;
-    private float slope, intercept;
-
-    Line(Tuple l, Tuple r) {
-        this.left = l;
-        this.right = r;
-        this.slope = ((float) this.left.Y - (float) this.right.Y) / ((float) this.left.X - (float) this.right.X);
-        this.intercept = this.left.Y - this.slope * this.left.X;
-    }
-
-    public int getAltitude(int X, int Y) {
-        return Math.round(Y - (this.slope * X + this.intercept));
-    }
-
-    public boolean isBelow(int X) {
-        if (X > this.right.X || X < this.left.X) return false;
-        return true;
-    }
-
-    public boolean isFlat() {
-        return this.slope == 0f;
-    }
-}
-
-class Lander {
-    private final float G = 3.711f;
-    private final float safeDropSpeed = -40f;
-    public int X; // Current X position of lander
-    public int Y; // Current Y position of lander
-    public int dx; // the horizontal speed (in m/s), can be negative.
-    public int dy; // the vertical speed (in m/s), can be negative.
-    public int fuel; // the quantity of remaining fuel in liters.
-    public int angle; // the rotation angle in degrees (-90 to 90).
-    public int thrust; // the thrust power (0 to 4).
-
-    Lander(Scanner in) {
-        this.X = in.nextInt();
-        this.Y = in.nextInt();
-        this.dx = in.nextInt();
-        this.dy = in.nextInt();
-        this.fuel = in.nextInt();
-        this.angle = in.nextInt();
-        this.thrust = in.nextInt();
-    }
-
-    public String getSafeSpeed() {
-        float fdy = this.dy;
-        float effectiveG = this.thrust - this.G;
-
-        if (fdy + effectiveG > 0) return "0";
-        if (fdy < this.safeDropSpeed + 3) return "4";
-        return "0";
-    }
-}
-
 class Mars_Lander_I {
-    static int x, y, surfaceN, lastX, lastY, flat = 0;
-    static Scanner in = new Scanner(System.in);
-    static Vector<Line> surface = new Vector<>();
+    static class Tuple {
+        public int X;
+        public int Y;
+
+        Tuple(int x, int y) {
+            this.X = x;
+            this.Y = y;
+        }
+    }
+
+    static class Line {
+        private Tuple left, right;
+        private float slope, intercept;
+
+        Line(Tuple l, Tuple r) {
+            this.left = l;
+            this.right = r;
+            this.slope = ((float) this.left.Y - (float) this.right.Y) / ((float) this.left.X - (float) this.right.X);
+            this.intercept = this.left.Y - this.slope * this.left.X;
+        }
+
+        public int getAltitude(int X, int Y) {
+            return Math.round(Y - (this.slope * X + this.intercept));
+        }
+
+        public boolean isBelow(int X) {
+            if (X > this.right.X || X < this.left.X) return false;
+            return true;
+        }
+
+        public boolean isFlat() {
+            return this.slope == 0f;
+        }
+    }
+
+    static class Lander {
+        private final float G = 3.711f;
+        private final float safeDropSpeed = -40f;
+        public int X; // Current X position of lander
+        public int Y; // Current Y position of lander
+        public int dx; // the horizontal speed (in m/s), can be negative.
+        public int dy; // the vertical speed (in m/s), can be negative.
+        public int fuel; // the quantity of remaining fuel in liters.
+        public int angle; // the rotation angle in degrees (-90 to 90).
+        public int thrust; // the thrust power (0 to 4).
+
+        Lander(Scanner in) {
+            this.X = in.nextInt();
+            this.Y = in.nextInt();
+            this.dx = in.nextInt();
+            this.dy = in.nextInt();
+            this.fuel = in.nextInt();
+            this.angle = in.nextInt();
+            this.thrust = in.nextInt();
+        }
+
+        public String getSafeSpeed() {
+            float fdy = this.dy;
+            float effectiveG = this.thrust - this.G;
+
+            if (fdy + effectiveG > 0) return "0";
+            if (fdy < this.safeDropSpeed + 3) return "4";
+            return "0";
+        }
+    }
+
+    static final Scanner in = new Scanner(System.in);
+
+    static final int surfaceN = in.nextInt() - 1; // The number of lines that make up the surface.
 
     public static void main(String args[]) {
-        surfaceN = in.nextInt(); // the number of points used to draw the surface of Mars.
-        surfaceN--; // The number of lines that make up the surface.
+
+        int x, y, lastX, lastY, flat = 0;
+        Vector<Line> surface = new Vector<>();
 
         x = in.nextInt(); // X coordinate of a surface point. (0 to 6999)
         y = in.nextInt(); // Y coordinate of a surface point. By linking all the points together in a sequential

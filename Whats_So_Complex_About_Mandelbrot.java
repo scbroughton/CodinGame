@@ -41,50 +41,50 @@ import java.util.Scanner;
  * @since Aug 14, 2018
  */
 
-class Complex {
-    public double r;
-    public double i;
+class Whats_So_Complex_About_Mandelbrot {
+    static class Complex {
+        public double r;
+        public double i;
 
-    Complex(double r, double i) {
-        this.r = r;
-        this.i = i;
-    }
+        Complex(double r, double i) {
+            this.r = r;
+            this.i = i;
+        }
 
-    Complex(String s) {
-        if (s.contains("+")) {
-            this.r = Double.parseDouble(s.substring(0, s.indexOf('+')));
-            this.i = Double.parseDouble(s.substring(s.indexOf('+') + 1, s.length() - 1));
-        } else {
-            this.r = Double.parseDouble(s.substring(0, s.indexOf('-', 1)));
-            this.i = Double.parseDouble(s.substring(s.indexOf('-', 1), s.length() - 1));
+        Complex(String s) {
+            if (s.contains("+")) {
+                this.r = Double.parseDouble(s.substring(0, s.indexOf('+')));
+                this.i = Double.parseDouble(s.substring(s.indexOf('+') + 1, s.length() - 1));
+            } else {
+                this.r = Double.parseDouble(s.substring(0, s.indexOf('-', 1)));
+                this.i = Double.parseDouble(s.substring(s.indexOf('-', 1), s.length() - 1));
+            }
+        }
+
+        public static Complex add(Complex a, Complex b) {
+            return new Complex(a.r + b.r, a.i + b.i);
+        }
+
+        public static Complex multiply(Complex a, Complex b) {
+            return new Complex(a.r * b.r - a.i * b.i, a.r * b.i + a.i * b.r);
+        }
+
+        public static Complex conjugate(Complex a) {
+            return new Complex(a.r, -1d * a.i);
+        }
+
+        public double squareMagnitude() {
+            return multiply(this, conjugate(this)).r;
         }
     }
 
-    public static Complex add(Complex a, Complex b) {
-        return new Complex(a.r + b.r, a.i + b.i);
-    }
-
-    public static Complex multiply(Complex a, Complex b) {
-        return new Complex(a.r * b.r - a.i * b.i, a.r * b.i + a.i * b.r);
-    }
-
-    public static Complex conjugate(Complex a) {
-        return new Complex(a.r, -1d * a.i);
-    }
-
-    public double squareMagnitude() {
-        return multiply(this, conjugate(this)).r;
-    }
-}
-
-class Whats_So_Complex_About_Mandelbrot {
     static final Scanner in = new Scanner(System.in);
     static final Complex c = new Complex(in.nextLine());
     static final int m = in.nextInt();
-    static int i = 1;
     static Complex z = new Complex(0d, 0d);
 
     public static void main(String args[]) {
+        int i = 1;
         for (; i < m; i++) {
             z = Complex.add(Complex.multiply(z, z), c);
             if (z.squareMagnitude() > 4d) break;

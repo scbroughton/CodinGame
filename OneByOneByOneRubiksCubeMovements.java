@@ -102,6 +102,7 @@ class OneByOneByOneRubiksCubeMovements {
             case 'z':
                 if (reverse) face = zc[face];
                 else face = z[face];
+            default:
         }
         if (rotations.length == 1) return indexToFace(face);
         return rotate(newRotations, face);
@@ -124,6 +125,7 @@ class OneByOneByOneRubiksCubeMovements {
                 break;
             case 'R':
                 i = 5;
+            default:
         }
         return i;
     }
@@ -145,6 +147,7 @@ class OneByOneByOneRubiksCubeMovements {
                 break;
             case 5:
                 c = 'R';
+            default:
         }
         return c;
     }
