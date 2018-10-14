@@ -179,7 +179,8 @@ class Mars_Lander_I {
 
     public static void main(String args[]) {
 
-        int x, y, lastX, lastY, flat = 0;
+        int x, y, lastX, lastY;
+        // int flat = 0;
         Vector<Line> surface = new Vector<>();
 
         x = in.nextInt(); // X coordinate of a surface point. (0 to 6999)
@@ -194,7 +195,7 @@ class Mars_Lander_I {
             Tuple right = new Tuple(x, y);
             surface.add(new Line(left, right));
             left = right;
-            if (surface.get(i).isFlat()) flat = i;
+            // if (surface.get(i).isFlat()) flat = i;
         }
 
         Lander l = new Lander(in);

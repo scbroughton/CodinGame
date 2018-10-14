@@ -73,7 +73,7 @@ class XMLMDF2016 {
         for (int i = 0; i < 26; i++) {
             if (tagWeight[i] > maxWeight) {
                 maxWeight = tagWeight[i];
-                maxTag = (char) (i + (int) 'a');
+                maxTag = (char) (i + 'a');
             }
         }
         System.out.println(maxTag);
